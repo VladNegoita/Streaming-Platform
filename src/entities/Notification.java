@@ -7,8 +7,8 @@ import lombok.Getter;
 public final class Notification {
 
     @Getter
-    private String movieName;
+    private final String movieName;
 
     @Getter
-    private String message;
+    private final String message;
 }

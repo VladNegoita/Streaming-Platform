@@ -1,6 +1,9 @@
 import actions.Action;
+import actions.Recommend;
 import actions.database.AddDataBase;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import database.NotifyAdded;
+import database.NotifyDeleted;
 import entities.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -47,7 +50,11 @@ public final class Main {
             movies.add(new Movie(movieInput));
         }
 
+
+
         DataBase dataBase = new DataBase(users, movies);
+        dataBase.addObserver(new NotifyAdded());
+        dataBase.addObserver(new NotifyDeleted());
 
         final String configName = "src/main/accessibility.json";
         Accessibility accessibility = Accessibility.load(configName);
@@ -63,6 +70,10 @@ public final class Main {
             if (actionOutput != null) {
                 output.add(actionOutput);
             }
+        }
+        ObjectNode recommendation = new Recommend(new ActionInput()).apply();
+        if (recommendation != null) {
+            output.add(recommendation);
         }
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();

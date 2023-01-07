@@ -37,16 +37,15 @@ public abstract class Action {
      */
     public static Action createAction(final ActionInput actionInput) {
 
-        if (actionInput.getType().equals("back"))
+        if (actionInput.getType().equals("back")) {
             return new Back(actionInput);
+        }
 
         if (actionInput.getType().equals("database")) {
-            switch (actionInput.getFeature()) {
-                case "add":
-                    return new AddDataBase(actionInput);
-                case "delete":
-                    return new DeleteDataBase(actionInput);
+            if ("add".equals(actionInput.getFeature())) {
+                return new AddDataBase(actionInput);
             }
+            return new DeleteDataBase(actionInput);
         }
 
         if (actionInput.getType().equals("change page")) {

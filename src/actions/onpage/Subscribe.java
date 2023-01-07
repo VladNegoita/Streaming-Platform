@@ -13,7 +13,7 @@ public final class Subscribe extends Action {
 
     @Getter
     private final String subscribedGenre;
-    public Subscribe(ActionInput actionInput) {
+    public Subscribe(final ActionInput actionInput) {
         super(actionInput);
         this.subscribedGenre = actionInput.getSubscribedGenre();
     }

@@ -10,7 +10,7 @@ import java.util.Observer;
 
 public final class NotifyAdded implements Observer {
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
         String movieName = (String) arg;
         State state = State.getSTATE();
 
@@ -22,7 +22,7 @@ public final class NotifyAdded implements Observer {
         for (Movie movie : state.getDataBase().getMovies()) {
             if (movie.getName().equals(movieName)) {
                 recentlyAddedMovie = movie;
-                return;
+                break;
             }
         }
 
@@ -30,8 +30,9 @@ public final class NotifyAdded implements Observer {
 
         for (User user : state.getDataBase().getUsers()) {
 
-            if (recentlyAddedMovie.getCountriesBanned().contains(user.getCredentials().getCountry()))
+            if (recentlyAddedMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
                 continue;
+            }
 
             for (String genre : recentlyAddedMovie.getGenres()) {
                 if (user.getSubscribedGenres().contains(genre)) {

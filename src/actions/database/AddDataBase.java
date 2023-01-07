@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public final class AddDataBase extends Action {
 
     private final Movie movie;
-    public AddDataBase(ActionInput actionInput) {
+    public AddDataBase(final ActionInput actionInput) {
         super(actionInput);
         movie = new Movie(actionInput.getAddedMovie());
     }
@@ -21,7 +21,8 @@ public final class AddDataBase extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
 
-        if (state.getDataBase().getMovies().stream().anyMatch(movie1 -> movie1.getName().equals(this.movie.getName()))) {
+        if (state.getDataBase().getMovies().stream()
+                .anyMatch(movie1 -> movie1.getName().equals(this.movie.getName()))) {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 

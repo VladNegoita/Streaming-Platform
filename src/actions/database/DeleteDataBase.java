@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public final class DeleteDataBase extends Action {
     private final String movieName;
-    public DeleteDataBase(ActionInput actionInput) {
+    public DeleteDataBase(final ActionInput actionInput) {
         super(actionInput);
         this.movieName = actionInput.getDeletedMovie();
     }
@@ -19,7 +19,8 @@ public final class DeleteDataBase extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
 
-        if (state.getDataBase().getMovies().stream().noneMatch(movie1 -> movie1.getName().equals(this.movieName))) {
+        if (state.getDataBase().getMovies().stream()
+                .noneMatch(movie1 -> movie1.getName().equals(this.movieName))) {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 

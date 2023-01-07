@@ -7,10 +7,10 @@ import main.State;
 import java.util.Observable;
 import java.util.Observer;
 
-public class NotifyDeleted implements Observer {
+public final class NotifyDeleted implements Observer {
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
         String movieName = (String) arg;
         State state = State.getSTATE();
 
@@ -36,8 +36,9 @@ public class NotifyDeleted implements Observer {
             user.getRatedMovies().removeIf(movie -> movie.getName().equals(movieName));
             user.getLikedMovies().removeIf(movie -> movie.getName().equals(movieName));
 
-            if (state.getVisibleMovies() != null)
+            if (state.getVisibleMovies() != null) {
                 state.getVisibleMovies().removeIf(movie -> movie.getName().equals(movieName));
+            }
         }
     }
 }
