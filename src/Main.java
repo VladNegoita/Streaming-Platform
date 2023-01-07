@@ -55,8 +55,6 @@ public final class Main {
             movies.add(new Movie(movieInput));
         }
 
-
-
         DataBase dataBase = new DataBase(users, movies);
         dataBase.addObserver(new NotifyAdded());
         dataBase.addObserver(new NotifyDeleted());

@@ -28,21 +28,40 @@ public final class Output {
 
         }
 
-        public OutputBuilder addError(final String error) {
-            this.error = error;
+        /**
+         *
+         * @param error - the desired message foe output
+         * @return the same instance of builder for chaining purposes
+         */
+        public OutputBuilder addError(final String errorMessage) {
+            this.error = errorMessage;
             return this;
         }
 
-        public OutputBuilder addMovies(final ArrayList<Movie> movies) {
-            this.movies = movies;
+        /**
+         *
+         * @param movies - the list of visible movies (deep copied)
+         * @return the same instance of builder for chaining purposes
+         */
+        public OutputBuilder addMovies(final ArrayList<Movie> movieArrayList) {
+            this.movies = movieArrayList;
             return this;
         }
 
-        public OutputBuilder addUser(final User user) {
-            this.user = user;
+        /**
+         *
+         * @param user - the current user (deep copied)
+         * @return the same instance of builder for chaining purposes
+         */
+        public OutputBuilder addUser(final User currentUser) {
+            this.user = currentUser;
             return this;
         }
 
+        /**
+         *
+         * @return the output object with the desired traits
+         */
         public Output build() {
             return new Output(this);
         }
@@ -57,6 +76,10 @@ public final class Output {
     private Output() {
     }
 
+    /**
+     *
+     * @return transforms this Output object into an ObjectNode (for printing)
+     */
     public ObjectNode transform() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode output = objectMapper.createObjectNode();
