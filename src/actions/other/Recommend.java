@@ -6,7 +6,7 @@ import entities.Movie;
 import entities.Notification;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import main.State;
@@ -80,11 +80,15 @@ public final class Recommend extends Action {
 
                 state.getCurrentUser().getNotifications()
                         .add(new Notification(movie.getName(), "Recommendation"));
-                return OutputFormatter.getOutput(null, null, new User(state.getCurrentUser()));
+                return new Output.OutputBuilder()
+                        .addMovies(null)
+                        .addUser(new User(state.getCurrentUser())).build().transform();
             }
         }
         state.getCurrentUser().getNotifications()
                 .add(new Notification("No recommendation", "Recommendation"));
-        return OutputFormatter.getOutput(null, null, new User(state.getCurrentUser()));
+        return new Output.OutputBuilder()
+                .addMovies(null)
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 }

@@ -3,12 +3,10 @@ package actions.onpage;
 import actions.Action;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.Getter;
 import lombok.Setter;
 import main.State;
-
-import java.util.ArrayList;
 
 public final class BuyTokens extends Action {
     @Getter
@@ -23,11 +21,11 @@ public final class BuyTokens extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
         if (state.getCurrentPage() != State.Page.UPGRADES) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         if (state.getCurrentUser().getCredentials().getBalance() < this.count) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         state.getCurrentUser().setTokensCount(state.getCurrentUser().getTokensCount() + this.count);

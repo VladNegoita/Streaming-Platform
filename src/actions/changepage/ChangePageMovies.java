@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import main.Helpers;
 import main.State;
 
@@ -22,7 +22,7 @@ public final class ChangePageMovies extends Action {
         State state = State.getSTATE();
         if (!state.getAccessibility().getAdjacent().get(state
                 .getCurrentPage().ordinal()).get(PAGENUMBER)) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         if (state.getCurrentPage() != State.Page.MOVIES) {
@@ -41,7 +41,8 @@ public final class ChangePageMovies extends Action {
             }
         }
 
-        return OutputFormatter.getOutput(null, Helpers
-                .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
+        return new Output.OutputBuilder()
+                .addMovies(Helpers.getDeepCopyMovies(state.getVisibleMovies()))
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 }

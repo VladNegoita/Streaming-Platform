@@ -4,10 +4,8 @@ import actions.Action;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import main.State;
-
-import java.util.ArrayList;
 
 public final class AddDataBase extends Action {
 
@@ -23,7 +21,7 @@ public final class AddDataBase extends Action {
 
         if (state.getDataBase().getMovies().stream()
                 .anyMatch(movie1 -> movie1.getName().equals(this.movie.getName()))) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         state.getDataBase().addMovie(this.movie);

@@ -3,11 +3,9 @@ package actions.onpage;
 import actions.Action;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.Getter;
 import main.State;
-
-import java.util.ArrayList;
 
 public final class Subscribe extends Action {
 
@@ -22,15 +20,15 @@ public final class Subscribe extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
         if (state.getCurrentPage() != State.Page.SEE_DETAILS) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         if (!state.getVisibleMovies().get(0).getGenres().contains(this.subscribedGenre)) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         if (state.getCurrentUser().getSubscribedGenres().contains(this.subscribedGenre)) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         state.getCurrentUser().getSubscribedGenres().add(this.subscribedGenre);

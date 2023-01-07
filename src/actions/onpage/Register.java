@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Credentials;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,23 +24,25 @@ public final class Register extends Action {
 
     @Override
     public ObjectNode apply() {
-        if (State.getSTATE().getCurrentPage() != State.Page.REGISTER) {
+        State state = State.getSTATE();
+        if (state.getCurrentPage() != State.Page.REGISTER) {
             State.emptyState();
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
-        if (State.getSTATE().getDataBase().getUsers().stream().anyMatch(
+        if (state.getDataBase().getUsers().stream().anyMatch(
                 user -> user.getCredentials().getName().equals(this.credentials.getName()))) {
             State.emptyState();
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         UserInput userInput = new UserInput(this.credentials);
         User user = new User(userInput);
-        State.getSTATE().getDataBase().getUsers().add(user);
-        State.getSTATE().setCurrentUser(user);
-        State.getSTATE().setCurrentPage(State.Page.HOME_AUTH);
-        State.getSTATE().setVisibleMovies(new ArrayList<>());
-        return OutputFormatter.getOutput(null, new ArrayList<>(), new User(user));
+        state.getDataBase().getUsers().add(user);
+        state.setCurrentUser(user);
+        state.setCurrentPage(State.Page.HOME_AUTH);
+        state.setVisibleMovies(new ArrayList<>());
+        return new Output.OutputBuilder()
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 }

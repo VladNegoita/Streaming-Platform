@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.Getter;
 import lombok.Setter;
 import main.Helpers;
@@ -33,7 +33,7 @@ public final class ChangePageSeeDetails extends Action {
         }
 
         if (state.getCurrentPage() != State.Page.MOVIES) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         Movie movieTarget = null;
@@ -52,14 +52,15 @@ public final class ChangePageSeeDetails extends Action {
                     state.getVisibleMovies().add(movieDataBase);
                 }
             }
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         state.getPreviousPages().push(state.getCurrentPage());
         state.setVisibleMovies(new ArrayList<>());
         state.getVisibleMovies().add(movieTarget);
         state.setCurrentPage(State.Page.SEE_DETAILS);
-        return OutputFormatter.getOutput(null, Helpers
-                .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
+        return new Output.OutputBuilder()
+                .addMovies(Helpers.getDeepCopyMovies(state.getVisibleMovies()))
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 }

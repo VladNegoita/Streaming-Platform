@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.Getter;
 import lombok.Setter;
 import main.Helpers;
@@ -27,7 +27,7 @@ public final class Search extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
         if (state.getCurrentPage() != State.Page.MOVIES) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         ArrayList<Movie> visibleMovies = new ArrayList<>();
@@ -38,12 +38,13 @@ public final class Search extends Action {
         }
 
         if (visibleMovies.size() == 0) {
-            return OutputFormatter.getOutput(null, new ArrayList<>(),
-                    new User(state.getCurrentUser()));
+            return new Output.OutputBuilder()
+                    .addUser(new User(state.getCurrentUser())).build().transform();
         }
 
         state.setVisibleMovies(visibleMovies);
-        return OutputFormatter.getOutput(null, Helpers
-                .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
+        return new Output.OutputBuilder()
+                .addMovies(Helpers.getDeepCopyMovies(state.getVisibleMovies()))
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 }

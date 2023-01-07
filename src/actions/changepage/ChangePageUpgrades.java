@@ -3,7 +3,7 @@ package actions.changepage;
 import actions.Action;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import main.State;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public final class ChangePageUpgrades extends Action {
         State state = State.getSTATE();
         if (!state.getAccessibility().getAdjacent().get(state
                 .getCurrentPage().ordinal()).get(PAGENUMBER)) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
 
         if (state.getCurrentPage() != State.Page.UPGRADES) {

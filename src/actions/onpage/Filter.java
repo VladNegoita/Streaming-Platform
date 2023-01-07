@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import entities.User;
 import fileio.ActionInput;
-import fileio.OutputFormatter;
+import fileio.Output;
 import lombok.Getter;
 import lombok.Setter;
 import main.Helpers;
 import main.State;
-
-import java.util.ArrayList;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
@@ -29,7 +27,7 @@ public final class Filter extends Action {
     public ObjectNode apply() {
         State state = State.getSTATE();
         if (state.getCurrentPage() != State.Page.MOVIES) {
-            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            return new Output.OutputBuilder().addError("Error").build().transform();
         }
         if (this.filters.getContains() != null) {
             State.getSTATE().getVisibleMovies().removeIf(toBeRemoved());
@@ -38,8 +36,9 @@ public final class Filter extends Action {
             State.getSTATE().getVisibleMovies().sort(sortCriteria()::apply);
         }
 
-        return OutputFormatter.getOutput(null, Helpers
-                .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
+        return new Output.OutputBuilder()
+                .addMovies(Helpers.getDeepCopyMovies(state.getVisibleMovies()))
+                .addUser(new User(state.getCurrentUser())).build().transform();
     }
 
     private Predicate<Movie> toBeRemoved() {
