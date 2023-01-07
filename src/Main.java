@@ -1,16 +1,14 @@
 import actions.Action;
+import actions.database.AddDataBase;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import entities.Movie;
-import fileio.ActionInput;
-import fileio.Input;
-import fileio.MovieInput;
-import fileio.UserInput;
+import fileio.*;
 import main.Accessibility;
-import main.DataBase;
+import database.DataBase;
 import main.State;
 
 import java.io.File;

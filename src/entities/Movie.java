@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 @AllArgsConstructor
 public final class Movie {
@@ -30,6 +33,9 @@ public final class Movie {
         this.rating = other.rating;
         this.numRatings = other.numRatings;
         this.sumRatings = other.sumRatings;
+
+        this.ratings = new HashMap<>();
+        this.ratings.putAll(other.ratings);
     }
 
     @Getter
@@ -74,9 +80,14 @@ public final class Movie {
     @JsonIgnore
     private int sumRatings;
 
+    @Getter
+    @Setter
+    @JsonIgnore
+    private Map<String, Integer> ratings;
+
     public Movie(final MovieInput movieInput) {
         this(movieInput.getName(), movieInput.getYear(), movieInput.getDuration(),
                 movieInput.getGenres(), movieInput.getActors(), movieInput.getCountriesBanned(),
-                0, 0, 0, 0);
+                0, 0, 0, 0, new HashMap<>());
     }
 }

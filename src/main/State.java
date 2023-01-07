@@ -1,5 +1,6 @@
 package main;
 
+import database.DataBase;
 import entities.Movie;
 import entities.User;
 import lombok.Getter;
@@ -46,7 +47,7 @@ public final class State {
 
     @Getter
     @Setter
-    private Movie lastMovie;
+    private Stack<Movie> lastMovie;
 
     @Getter
     @Setter
@@ -66,6 +67,7 @@ public final class State {
         State.getSTATE().setCurrentPage(Page.HOME_NO_AUTH);
         State.getSTATE().setVisibleMovies(new ArrayList<>());
         State.getSTATE().setCurrentUser(null);
+        State.getSTATE().setLastMovie(new Stack<>());
         State.getSTATE().setPreviousPages(new Stack<>());
     }
 }

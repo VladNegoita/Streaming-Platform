@@ -7,7 +7,7 @@ import fileio.ActionInput;
 import fileio.OutputFormatter;
 import lombok.Getter;
 import lombok.Setter;
-import main.DataBase;
+import database.DataBase;
 import main.State;
 
 import java.util.ArrayList;

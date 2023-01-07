@@ -41,12 +41,20 @@ public final class Back extends Action {
         switch (state.getCurrentPage()) {
             case MOVIES:
                 action = new ChangePageMovies(actionInput);
+                break;
             case SEE_DETAILS:
-                actionInput.setMovie(state.getLastMovie().getName());
+                actionInput.setMovie(state.getLastMovie().peek().getName());
+                state.getLastMovie().pop();
                 action = new ChangePageSeeDetails(actionInput);
-            default:
+                break;
+            case UPGRADES:
                 action = new ChangePageUpgrades(actionInput);
+                break;
+            default:
+                state.setVisibleMovies(new ArrayList<>());
+                return null;
         }
+
         return action.apply();
     }
 }

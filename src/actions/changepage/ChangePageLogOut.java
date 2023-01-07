@@ -26,7 +26,7 @@ public final class ChangePageLogOut extends Action {
         state.setCurrentPage(State.Page.HOME_NO_AUTH);
         state.setCurrentUser(null);
         state.setVisibleMovies(new ArrayList<>());
-        state.setLastMovie(null);
+        state.setLastMovie(new Stack<>());
         state.setPreviousPages(new Stack<>());
         return null;
     }

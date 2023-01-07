@@ -146,9 +146,6 @@ public final class Test {
             final Future<Object> future = createTimerTask(testArgv);
 
             runTest(testFileName, config, future);
-
-            if (testFileName.equals("basic_4.json"))
-                return;
         }
 
         score += Checkstyle.testCheckstyle();

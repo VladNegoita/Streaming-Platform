@@ -22,6 +22,12 @@ public final class ChangePageUpgrades extends Action {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 
+        if (state.getCurrentPage() != State.Page.UPGRADES) {
+            state.getPreviousPages().push(state.getCurrentPage());
+            if (state.getCurrentPage() == State.Page.SEE_DETAILS) {
+                state.getLastMovie().push(state.getVisibleMovies().get(0));
+            }
+        }
         state.setCurrentPage(State.Page.UPGRADES);
         state.setVisibleMovies(new ArrayList<>());
         return null;

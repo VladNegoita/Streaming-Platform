@@ -55,9 +55,9 @@ public final class ChangePageSeeDetails extends Action {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 
+        state.getPreviousPages().push(state.getCurrentPage());
         state.setVisibleMovies(new ArrayList<>());
         state.getVisibleMovies().add(movieTarget);
-        state.setLastMovie(movieTarget);
         state.setCurrentPage(State.Page.SEE_DETAILS);
         return OutputFormatter.getOutput(null, Helpers
                 .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));

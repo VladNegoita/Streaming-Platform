@@ -39,9 +39,19 @@ public final class RateMovie extends Action {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 
+        if (movie.getRatings().containsKey(state.getCurrentUser().getCredentials().getName())) {
+            int oldRate = movie.getRatings().get(state.getCurrentUser().getCredentials().getName());
+            movie.setSumRatings(movie.getSumRatings() + this.rate - oldRate);
+            movie.getRatings().put(state.getCurrentUser().getCredentials().getName(), this.rate);
+            movie.setRating((double) movie.getSumRatings() / movie.getNumRatings());
+            return OutputFormatter.getOutput(null, Helpers
+                    .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
+        }
+
         movie.setSumRatings(movie.getSumRatings() + this.rate);
         movie.setNumRatings(movie.getNumRatings() + 1);
-        movie.setRating(movie.getSumRatings() / movie.getNumRatings());
+        movie.setRating((double) movie.getSumRatings() / movie.getNumRatings());
+        movie.getRatings().put(state.getCurrentUser().getCredentials().getName(), this.rate);
         state.getCurrentUser().getRatedMovies().add(movie);
 
         return OutputFormatter.getOutput(null, Helpers

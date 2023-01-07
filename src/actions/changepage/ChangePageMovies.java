@@ -25,6 +25,13 @@ public final class ChangePageMovies extends Action {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 
+        if (state.getCurrentPage() != State.Page.MOVIES) {
+            state.getPreviousPages().push(state.getCurrentPage());
+            if (state.getCurrentPage() == State.Page.SEE_DETAILS) {
+                state.getLastMovie().push(state.getVisibleMovies().get(0));
+            }
+        }
+
         state.setCurrentPage(State.Page.MOVIES);
         state.setVisibleMovies(new ArrayList<>());
         for (Movie movie : state.getDataBase().getMovies()) {
