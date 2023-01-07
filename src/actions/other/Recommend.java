@@ -1,5 +1,6 @@
-package actions;
+package actions.other;
 
+import actions.Action;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import entities.Movie;
 import entities.Notification;
@@ -19,10 +20,10 @@ public final class Recommend extends Action {
     @AllArgsConstructor
     public final class Genre {
         @Getter
-        public final String genre;
+        private final String genre;
 
         @Getter
-        public final int likes;
+        private final int likes;
     };
 
     public Recommend(final ActionInput actionInput) {
@@ -51,7 +52,7 @@ public final class Recommend extends Action {
             }
         }
 
-        ArrayList<Genre> sortedGenres= new ArrayList<>();
+        ArrayList<Genre> sortedGenres = new ArrayList<>();
         genres.forEach((genre, value) -> sortedGenres.add(new Genre(genre, value)));
         sortedGenres.sort((genre1, genre2) -> {
             if (genre1.getLikes() != genre2.getLikes()) {
@@ -60,11 +61,13 @@ public final class Recommend extends Action {
             return genre1.getGenre().compareTo(genre2.getGenre());
         });
 
-        state.getDataBase().getMovies().sort((movie1, movie2) -> movie2.getNumLikes() - movie1.getNumLikes());
+        state.getDataBase().getMovies()
+                .sort((movie1, movie2) -> movie2.getNumLikes() - movie1.getNumLikes());
 
         for (Genre genre : sortedGenres) {
             for (Movie movie : state.getDataBase().getMovies()) {
-                if (movie.getCountriesBanned().contains(state.getCurrentUser().getCredentials().getCountry())) {
+                if (movie.getCountriesBanned().contains(state
+                        .getCurrentUser().getCredentials().getCountry())) {
                     continue;
                 }
                 if (!movie.getGenres().contains(genre.getGenre())) {

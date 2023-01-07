@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public final class OutputFormatter {
     private OutputFormatter() {
-
     }
 
     /**

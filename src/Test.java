@@ -116,7 +116,7 @@ public final class Test {
      */
     public static void main(final String[] argv) {
         runTests();
-//        preTestCleanUp();
+        preTestCleanUp();
         System.exit(0);
     }
 

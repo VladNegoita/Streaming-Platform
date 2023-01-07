@@ -8,7 +8,7 @@ import actions.changepage.ChangePageSeeDetails;
 import actions.changepage.ChangePageUpgrades;
 import actions.database.AddDataBase;
 import actions.database.DeleteDataBase;
-import actions.onpage.Back;
+import actions.other.Back;
 import actions.onpage.BuyPremiumAccount;
 import actions.onpage.BuyTokens;
 import actions.onpage.Filter;

@@ -14,13 +14,15 @@ public final class NotifyDeleted implements Observer {
         String movieName = (String) arg;
         State state = State.getSTATE();
 
-        if (state.getDataBase().getMovies().stream().anyMatch(movie1 -> movie1.getName().equals(movieName))) {
+        if (state.getDataBase().getMovies().stream()
+                .anyMatch(movie1 -> movie1.getName().equals(movieName))) {
             return;
         }
 
         for (User user : state.getDataBase().getUsers()) {
 
-            if (user.getPurchasedMovies().stream().noneMatch(movie -> movie.getName().equals(movieName))) {
+            if (user.getPurchasedMovies().stream()
+                    .noneMatch(movie -> movie.getName().equals(movieName))) {
                 continue;
             }
 

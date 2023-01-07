@@ -24,6 +24,12 @@ public final class Purchase extends Action {
         }
 
         Movie movie = state.getVisibleMovies().get(0);
+
+        if (state.getCurrentUser().getPurchasedMovies().stream()
+                .anyMatch(movie1 -> movie1.getName().equals(movie.getName()))) {
+            return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+        }
+
         if (state.getCurrentUser().getCredentials()
                 .getAccountType().equals("premium")
                 && state.getCurrentUser().getNumFreePremiumMovies() > 0) {

@@ -1,4 +1,4 @@
-package actions.onpage;
+package actions.other;
 
 import actions.Action;
 import actions.changepage.ChangePageMovies;
@@ -32,6 +32,8 @@ public final class Back extends Action {
             case LOGIN:
             case HOME_NO_AUTH:
                 return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
+            default:
+                break;
         }
 
         state.setCurrentPage(state.getPreviousPages().peek());

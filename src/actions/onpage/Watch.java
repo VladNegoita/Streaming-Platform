@@ -28,7 +28,11 @@ public final class Watch extends Action {
             return OutputFormatter.getOutput("Error", new ArrayList<>(), null);
         }
 
-        state.getCurrentUser().getWatchedMovies().add(movie);
+        if (state.getCurrentUser().getWatchedMovies().stream()
+                .noneMatch((movie1 -> movie1.getName().equals(movie.getName())))) {
+            state.getCurrentUser().getWatchedMovies().add(movie);
+        }
+
         return OutputFormatter.getOutput(null, Helpers
                 .getDeepCopyMovies(state.getVisibleMovies()), new User(state.getCurrentUser()));
     }

@@ -14,7 +14,8 @@ public final class NotifyAdded implements Observer {
         String movieName = (String) arg;
         State state = State.getSTATE();
 
-        if (state.getDataBase().getMovies().stream().noneMatch(movie1 -> movie1.getName().equals(movieName))) {
+        if (state.getDataBase().getMovies().stream()
+                .noneMatch(movie1 -> movie1.getName().equals(movieName))) {
             return;
         }
 
@@ -30,7 +31,8 @@ public final class NotifyAdded implements Observer {
 
         for (User user : state.getDataBase().getUsers()) {
 
-            if (recentlyAddedMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
+            if (recentlyAddedMovie.getCountriesBanned()
+                    .contains(user.getCredentials().getCountry())) {
                 continue;
             }
 

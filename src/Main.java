@@ -1,6 +1,5 @@
 import actions.Action;
-import actions.Recommend;
-import actions.database.AddDataBase;
+import actions.other.Recommend;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import database.NotifyAdded;
 import database.NotifyDeleted;
@@ -9,7 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import entities.Movie;
-import fileio.*;
+import fileio.ActionInput;
+import fileio.Input;
+import fileio.MovieInput;
+import fileio.UserInput;
 import main.Accessibility;
 import database.DataBase;
 import main.State;
@@ -19,7 +21,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public final class Main {
-    private Main() {}
+
+    private Main() {
+
+    }
 
     /**
      *
