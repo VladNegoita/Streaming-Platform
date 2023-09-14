@@ -1,4 +1,4 @@
-# POO TV - II
+# Streaming-Platform
 
 ## Structure
 
